@@ -12,11 +12,9 @@ Keywords: Anomaly detection, deep learning, industrial system.
 ## Description
 
 <div style="text-align: justify"> 
-
 El mantenimiento predictivo puede abarcar diferentes temas incluyendo predicción de fallos, diagnósticos, clasificación 
 de fallos e incluso recomendaciones de acciones, por eso es importante escoger un modelo que se aproxime a la realidad, 
 de tal manera que sea capaz de optimizar los recursos económicos.
-
 </div>
 
 ## Author

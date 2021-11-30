@@ -1,4 +1,5 @@
 from keras.callbacks import ModelCheckpoint
+from keras.callbacks import EarlyStopping
 from keras.models import Sequential, Model
 from keras.layers import Dense
 from keras import optimizers

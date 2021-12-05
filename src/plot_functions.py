@@ -68,3 +68,16 @@ def plot_loss(history):
     plt.xlabel('Epochs')
     plt.legend(['Train loss', 'Test loss'], loc='upper right')
     plt.show()
+
+
+def plot_matrix_correlations(correlations):
+    """
+    Plot rectangular data as a color-encoded matrix.
+    This is an Axes-level function and will draw the heatmap.
+    Axes space will be taken and used to plot a colormap, unless ``cbar``
+    is False or a separate Axes is provided to ``cbar_ax``."""
+
+    sns.heatmap(correlations, annot=True, cmap='RdYlGn', linewidths=0.2)
+    fig = plt.gcf()
+    fig.set_size_inches(20, 20)
+    plt.show()

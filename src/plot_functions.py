@@ -77,7 +77,7 @@ def plot_matrix_correlations(correlations):
     Axes space will be taken and used to plot a colormap, unless ``cbar``
     is False or a separate Axes is provided to ``cbar_ax``."""
 
-    sns.heatmap(correlations, annot=True, cmap='RdYlGn', linewidths=0.2)
+    sns.heatmap(correlations, annot=True, cmap='YlGnBu', linewidths=.3)
     fig = plt.gcf()
-    fig.set_size_inches(20, 20)
+    fig.set_size_inches(19, 19)
     plt.show()

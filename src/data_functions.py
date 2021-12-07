@@ -22,3 +22,20 @@ def gen_label(id_df, seq_length, seq_cols, label):
     for start, stop in zip(range(0, num_elements - seq_length), range(seq_length, num_elements)):
         y_label.append(id_df[label][stop])
     return np.array(y_label)
+
+
+def prepare_train_data(df):
+    """
+    Crea una columna en el dataset recibido por parametro.
+    Esta columna se obtiene de la resta del ultim ciclo de cada id,
+    menos el ciclo actual.
+
+    :param df: a pd Dataframe
+    :return: a df
+    """
+    rul = pd.DataFrame(df.groupby('id')['cycle_time'].max().reset_index())
+    rul.columns = ['id', 'max']
+    df = df.merge(rul, on=['id'], how='left')
+    df['RUL'] = df['max'] - df['cycle_time']
+    df.drop(columns=['max'], inplace=True)
+    return df

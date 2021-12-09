@@ -1,9 +1,65 @@
 from keras.callbacks import ModelCheckpoint
-from keras.callbacks import EarlyStopping
-from keras.models import Sequential, Model
-from keras.layers import Dense
 from keras import optimizers
 import tensorflow as tf
+from imports import *
+from metric_fuctions import *
+from data_functions import *
+
+
+def lstm_train(seq_array, label_array, sequence_length):
+    nb_features = seq_array.shape[2]
+    nb_out = label_array.shape[1]
+
+    model = Sequential()
+    model.add(LSTM(
+        input_shape=(sequence_length, nb_features),
+        units=100,
+        return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM(
+        units=50,
+        return_sequences=False))
+    model.add(Dropout(0.2))
+    model.add(Dense(units=nb_out))
+    model.add(Activation("linear"))
+    model.compile(loss='mean_squared_error', optimizer='rmsprop', metrics=['mae', r2_keras])
+
+    print(model.summary())
+    history = model.fit(seq_array, label_array, epochs=60, batch_size=200, validation_split=0.05, verbose=2)
+    print(history.history.keys())
+    return model, history
+
+
+# function for creating and training models using the "Random forest" and "XGBoost" algorithms
+def train_models(data, model='RF'):
+    if model != 'LSTM':
+        X = data.iloc[:, :14].to_numpy()
+        Y = data.iloc[:, 14:].to_numpy()
+        Y = np.ravel(Y)
+
+    if model == 'RF':
+        model = RandomForestRegressor(n_estimators=70, max_features=7, max_depth=5, n_jobs=-1, random_state=1)
+        model.fit(X, Y)
+        return model
+
+    elif model == 'DT':
+        model = DecisionTreeClassifier(max_depth=4, criterion='gini', random_state=0)
+        # Entrenamiento del modelo
+        model.fit(X, Y)
+        return model
+
+    elif model == 'XGB':
+        model = xgboost.XGBRegressor(n_estimators=110, learning_rate=0.018, gamma=0, subsample=0.8,
+                                     colsample_bytree=0.5, max_depth=3, silent=True)
+        model.fit(X, Y)
+        return model
+
+    elif model == 'LSTM':
+        seq_array, label_array, lstm_test_df, sequence_length, sequence_cols = lstm_data_preprocessing(data[0], data[1],
+                                                                                                       data[2])
+        model_instance, history = lstm_train(seq_array, label_array, sequence_length)
+        return model_instance, history, lstm_test_df, seq_array, label_array, sequence_length, sequence_cols
+    return
 
 
 def create_model(neurons: list, dim: int, classes: int) -> Model:

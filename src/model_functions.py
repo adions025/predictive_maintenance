@@ -30,8 +30,14 @@ def lstm_train(seq_array, label_array, sequence_length):
     return model, history
 
 
-# function for creating and training models using the "Random forest" and "XGBoost" algorithms
 def train_models(data, model='RF'):
+    """
+    Function for creating and training different models
+
+    :param data:
+    :param model:
+    :return:
+    """
     if model != 'LSTM':
         X = data.iloc[:, :14].to_numpy()
         Y = data.iloc[:, 14:].to_numpy()

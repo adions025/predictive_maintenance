@@ -39,6 +39,16 @@ import xgboost
 import time
 from tqdm import tqdm
 
+# Preprocesado y modelado Decision Tree
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import plot_tree
+from sklearn.tree import export_graphviz
+from sklearn.tree import export_text
+
+# Preprocesado y modelado de Naive-Bayes
+from sklearn.naive_bayes import GaussianNB
+from sklearn.feature_selection import SelectKBest
+
 # warnings
 import warnings
 

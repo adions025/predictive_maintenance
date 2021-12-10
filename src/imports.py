@@ -4,6 +4,7 @@ import os
 
 # plot imports
 import matplotlib.pyplot as plt
+
 plt.style.use('ggplot')
 import seaborn as sns
 
@@ -41,6 +42,7 @@ from tqdm import tqdm
 
 # Preprocesado y modelado Decision Tree
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.tree import plot_tree
 from sklearn.tree import export_graphviz
 from sklearn.tree import export_text

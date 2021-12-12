@@ -81,3 +81,63 @@ def plot_matrix_correlations(correlations):
     fig = plt.gcf()
     fig.set_size_inches(19, 19)
     plt.show()
+
+
+def lstm_test_evaluation_graphs(model, history, seq_array, label_array):
+    # summarize history for R^2
+    fig_acc = plt.figure(figsize=(10, 10))
+    plt.plot(history.history['r2_keras'])
+    plt.plot(history.history['val_r2_keras'])
+    plt.title('model r^2')
+    plt.ylabel('R^2')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+    # fig_acc.savefig("model_r2.png")
+
+    # summarize history for MAE
+    fig_acc = plt.figure(figsize=(10, 10))
+    plt.plot(history.history['mae'])
+    plt.plot(history.history['val_mae'])
+    plt.title('model MAE')
+    plt.ylabel('MAE')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+    # fig_acc.savefig("model_mae.png")
+
+    # summarize history for Loss
+    fig_acc = plt.figure(figsize=(10, 10))
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+    # fig_acc.savefig("model_regression_loss.png")
+
+    # training metrics
+    scores = model.evaluate(seq_array, label_array, verbose=1, batch_size=200)
+    print('\nMAE: {}'.format(scores[1]))
+    print('\nR^2: {}'.format(scores[2]))
+
+    y_pred = model.predict(seq_array, verbose=1, batch_size=200)
+    y_true = label_array
+
+    test_set = pd.DataFrame(y_pred)
+    test_set.head()
+
+
+# function for joint display of real and predicted values
+def plot_result(y_true, y_pred):
+    rcParams['figure.figsize'] = 12, 10
+    plt.plot(y_pred)
+    plt.plot(y_true)
+    plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+    plt.ylabel('RUL')
+    plt.xlabel('Observaciones de entramiento')
+    plt.legend(('Predicted', 'True'), loc='upper right')
+    plt.title('Comparasión de True values and Predicted values')
+    plt.show()
+    return

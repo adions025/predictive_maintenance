@@ -19,6 +19,7 @@ from keras.optimizers import Adam, SGD, Adadelta, Adagrad
 import sklearn
 from sklearn import metrics
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
@@ -39,6 +40,7 @@ import math
 import xgboost
 import time
 from tqdm import tqdm
+from xgboost import XGBClassifier
 
 # Preprocesado y modelado Decision Tree
 from sklearn.tree import DecisionTreeClassifier

@@ -14,6 +14,9 @@ import keras.backend as K
 from keras.models import Sequential, Model, load_model
 from keras.layers import Dense, Input, Dropout, LSTM, Activation
 from keras.optimizers import Adam, SGD, Adadelta, Adagrad
+from keras.callbacks import EarlyStopping
+from keras.callbacks import ReduceLROnPlateau
+from keras.callbacks import ModelCheckpoint
 
 # sklearn imports
 import sklearn

@@ -25,7 +25,7 @@ def lstm_train(seq_array, label_array, sequence_length):
     model.compile(loss='mean_squared_error', optimizer='rmsprop', metrics=['mae', r2_keras])
 
     print(model.summary())
-    history = model.fit(seq_array, label_array, epochs=60, batch_size=200, validation_split=0.05, verbose=2)
+    history = model.fit(seq_array, label_array, epochs=100, batch_size=200, validation_split=0.05, verbose=2)
     print(history.history.keys())
     return model, history
 
@@ -43,14 +43,18 @@ def train_models(data, model='RF'):
         Y = data.iloc[:, 14:].to_numpy()
         Y = np.ravel(Y)
 
+    if model == 'GNB':
+        model = GaussianNB()
+        model.fit(X, Y)
+        return model
+
     if model == 'RF':
         model = RandomForestRegressor(n_estimators=70, max_features=7, max_depth=5, n_jobs=-1, random_state=1)
         model.fit(X, Y)
         return model
 
     elif model == 'DT':
-        model = DecisionTreeClassifier(max_depth=4, criterion='gini', random_state=0)
-        # Entrenamiento del modelo
+        model = DecisionTreeRegressor(max_depth=None, criterion='mse', random_state=0)
         model.fit(X, Y)
         return model
 
@@ -72,6 +76,7 @@ def create_model(neurons: list, dim: int, classes: int) -> Model:
     """
     Function to create a model, se necesita una lista de capas ocultas.
     Se necesita el tamaño de la entrada y la salida, por defecto la
+
     las capas ocultas se activan con relu, y la capa de salida softmax.
     Cause we have a multi-class classification problem = there is only
     one "right answer" = the outputs are mutually exclusive, then we

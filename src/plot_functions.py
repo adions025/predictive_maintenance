@@ -1,3 +1,10 @@
+"""
+Funciones necesarias para graficar
+resultados.
+
+@author: Adonis Gonzalez
+"""
+
 from imports import *
 
 
@@ -21,7 +28,8 @@ def plot_cm(cm: confusion_matrix, labels: list):
         plt.text(j, i, format(cm[i, j], 'd'),
                  horizontalalignment="center",
                  color="white",
-                 fontsize=12)
+                 weight="bold",
+                 fontsize=25)
 
     ticks = np.arange(len(labels))
     plt.xticks(ticks, labels)
@@ -83,9 +91,7 @@ def plot_matrix_correlations(correlations):
     plt.show()
 
 
-def lstm_test_evaluation_graphs(model, history, seq_array, label_array):
-    # summarize history for R^2
-    fig_acc = plt.figure(figsize=(10, 10))
+def lstm_evaluation(model, history, seq_array, label_array):
     plt.plot(history.history['r2_keras'])
     plt.plot(history.history['val_r2_keras'])
     plt.title('model r^2')
@@ -93,10 +99,7 @@ def lstm_test_evaluation_graphs(model, history, seq_array, label_array):
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.show()
-    # fig_acc.savefig("model_r2.png")
 
-    # summarize history for MAE
-    fig_acc = plt.figure(figsize=(10, 10))
     plt.plot(history.history['mae'])
     plt.plot(history.history['val_mae'])
     plt.title('model MAE')
@@ -104,10 +107,7 @@ def lstm_test_evaluation_graphs(model, history, seq_array, label_array):
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.show()
-    # fig_acc.savefig("model_mae.png")
 
-    # summarize history for Loss
-    fig_acc = plt.figure(figsize=(10, 10))
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
     plt.title('model loss')
@@ -115,23 +115,16 @@ def lstm_test_evaluation_graphs(model, history, seq_array, label_array):
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.show()
-    # fig_acc.savefig("model_regression_loss.png")
 
-    # training metrics
     scores = model.evaluate(seq_array, label_array, verbose=1, batch_size=200)
     print('\nMAE: {}'.format(scores[1]))
     print('\nR^2: {}'.format(scores[2]))
-
     y_pred = model.predict(seq_array, verbose=1, batch_size=200)
-    y_true = label_array
-
     test_set = pd.DataFrame(y_pred)
     test_set.head()
 
-
-# function for joint display of real and predicted values
 def plot_result(y_true, y_pred):
-    rcParams['figure.figsize'] = 12, 10
+    rcParams['figure.figsize'] = 15, 9
     plt.plot(y_pred)
     plt.plot(y_true)
     plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)

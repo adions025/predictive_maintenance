@@ -7,6 +7,7 @@ Keywords: Anomaly detection, Deep Learning, Industrial System, LSTM, Random Fore
 - Python
 - Tensorflow
 - Keras
+- Sklearn
 - Numpy
 - Pandas
 - Matplotlib
@@ -26,6 +27,7 @@ El mantenimiento predictivo puede abarcar diferentes temas incluyendo predicció
 de fallos e incluso recomendaciones de acciones, por eso es importante escoger un modelo que se aproxime a la realidad, 
 de tal manera que sea capaz de optimizar los recursos económicos. 
 
+<br></br>
 
 Por ello surge la necesidad de utilizar modelos de predicción para estimar los posibles fallos en las máquinas 
 industriales con el menor error posible, de esta manera reducir los costes de mantenimiento del presupuesto y maximizar 
